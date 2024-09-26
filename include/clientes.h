@@ -25,13 +25,16 @@ int max(int a, int b);
 // Função para criar um novo nó
 Node* newNode(Cliente cliente);
 
-// Função para realizar a rotação à direita
+// Função para rotacionar à direita a subárvore com raiz y
 Node *Girar_direita(Node *y);
 
-// Função para realizar a rotação à esquerda
+// Função para rotacionar à esquerda a subárvore com raiz x
 Node *Girar_esquerda(Node *x);
 
-// Função para obter o fator de balanceamento de um nó
-int Fator_balanceamento(Node *N)
+// Função para obter o fator de balanceamento do nó N
+int Fator_balanceamento(Node *N);
+
+// Função para inserir um novo cliente na árvore AVL
+Node* Inserir(Node* node, Cliente cliente);
 
 #endif
