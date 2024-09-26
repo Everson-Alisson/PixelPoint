@@ -24,7 +24,10 @@ Neste arquivo você verá:
 - [Descrição](#5.0-descrição)
 - [Árvore de busca binária ](#6.0-Avl)
 - [Tabela Hash](#7.0-Hash)
-- [Execução do Projeto](#8.0-Execução)
+- [Pré-requisitos para compilar](#8.0-Pre-requisitos)
+- [Execução do Projeto](#9.0-Execução-do-projeto)
+- [Compilação do Código](#9.1-compilação-do-codigo)
+- [Execução do Código](#9.2-execução-do-codigo)
 
 ## **1.0-IA's utlizada**
 
@@ -78,13 +81,17 @@ Uma tabela hash é uma estrutura de dados que mapeia chaves a valores de maneira
 #### Qual a função dela no programa?
 Mapear as mercadorias por categoria, facilitando o controle de estoque da loja.
 
-## 8. Execução do Projeto
-### 8.1 Compilação do Código
+## 8. Pré-Requisitos
+
+Para executar o código é necessário um compilador C instalado. Recomendamos o uso do [GCC](https://gcc.gnu.org/).
+
+## 9. Execução do Projeto
+### 9.1 Compilação do Código
 Para compilar o código, abra o terminal e navegue até a pasta `linguagem_c` e execute o seguinte comando:
 ```
 gcc -o main main.c 
 ```
-### 8.2 Execução do Código
+### 9.2 Execução do Código
 Para executar o código, digite o comando:
 ```
 ./main
