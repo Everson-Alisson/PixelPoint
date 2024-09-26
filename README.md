@@ -19,8 +19,12 @@
 Neste arquivo você verá:
 - [IA's utilizadas](#1.0-IA's-utilizadas)
 - [Introdução](#2.0-Introdução)
-- [Problemática](#3.0-problemática)
-- [Descrição](#4.0-descrição)
+- [Organizalção do código](#3.0-Organização)
+- [Problemática](#4.0-problemática)
+- [Descrição](#5.0-descrição)
+- [Árvore de busca binária ](#6.0-Avl)
+- [Tabela Hash](#7.0-Hash)
+- [Execução do Projeto](#8.0-Execução)
 
 ## **1.0-IA's utlizada**
 
@@ -31,11 +35,22 @@ Neste arquivo você verá:
 ## **2.0-Introdução**
 
 Um sistema usado para gerenciar uma loja de jogos, com os seguintes atributos, cadastrar/remover clientes, cadastrar/remover mercadoria (separando por categoria), ter o controle de estoque e realizar vendas.
-## **3.0-Problemática**
+
+## **3.0-Organização**
+
+``` 
+📁 - PixelPoint
+│
+├───include
+├───src
+└───README.md
+```
+
+## **4.0-Problemática**
 
 Projete um sistema em alguma linguagem que faça uso de ponteiros para gerenciar uma loja de jogos. Seu sistema deve ser capaz de manipular informações dos jogos e possiveis clientes
 
-## **4.0-Descrição**
+## **5.0-Descrição**
 
 #### O programa deve conter os seguintes atributos:<br>
 - Cadastrar e remover jogos separados por categoria<br>
@@ -47,7 +62,7 @@ Projete um sistema em alguma linguagem que faça uso de ponteiros para gerenciar
 - Arvore de busca binária ou AVL
 - Tabela Hash
 
-## **5.0-Arvore de busca Binária**
+## **6.0-Arvore de busca Binária**
 
 #### Como a Arvore de busca binaria funciona? <br>
 Uma árvore de busca binária é uma estrutura de dados em forma de árvore que armazena elementos de forma hierárquica, facilitando operações como busca, inserção e remoção. Cada nó de uma árvore binária de busca tem no máximo dois filhos: um filho à esquerda e um filho à direita.
@@ -55,10 +70,23 @@ Uma árvore de busca binária é uma estrutura de dados em forma de árvore que 
 
 #### Qual a função dela no programa?
 Ela ficará responsavel por burcar, inserir e remover mercadorias e clientes da loja.
-## **6.0-Tabela Hash**
+
+## **7.0-Tabela Hash**
 
 #### Como funciona a tabela Hash?<br>
 Uma tabela hash é uma estrutura de dados que mapeia chaves a valores de maneira muito eficiente, usando uma técnica conhecida como hashing. É amplamente usada quando se precisa de buscas rápidas, inserções e remoções de elementos, geralmente com complexidade próxima de O(1).
 #### Qual a função dela no programa?
 Mapear as mercadorias por categoria, facilitando o controle de estoque da loja.
+
+## 8. Execução do Projeto
+### 8.1 Compilação do Código
+Para compilar o código, abra o terminal e navegue até a pasta `linguagem_c` e execute o seguinte comando:
+```
+gcc -o main main.c 
+```
+### 8.2 Execução do Código
+Para executar o código, digite o comando:
+```
+./main
+```
 <img width=100% src="https://capsule-render.vercel.app/api?type=waving&height=120&color=FFFFFF&section=footer"/>
