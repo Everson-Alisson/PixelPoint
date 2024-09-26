@@ -19,4 +19,7 @@ typedef struct Node {
 // Função para obter a Altura de um nó
 int Altura(Node *N);
 
+// Função para obter o valor máximo entre dois inteiros
+int max(int a, int b);
+
 #endif
