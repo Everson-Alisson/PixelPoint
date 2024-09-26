@@ -4,7 +4,9 @@ int main () {
     int opcao;
 
     do {
+        Node *raiz = NULL;
         int opcao;
+        Cliente cliente;
 
         printf("-------------------------\n");
         printf("\tMENU\n");
@@ -24,13 +26,34 @@ int main () {
 
         switch (opcao) {
             case 1:
-                printf("Cadastrar Cliente\n");
+                printf("Informe o nome do cliente: ");
+                scanf(" %[^\n]", cliente.nome);
+                printf("Informe o ID do cliente: ");
+                scanf("%d", &cliente.id);
+                
+                raiz = Inserir(raiz, cliente);
+
+                printf("Cliente adicionado com sucesso\n");
+                
                 break;
             case 2:
-                printf("Remover Cliente\n");
+                Imprimir_AVL(raiz);
+
+                printf("----------------------------------------\n\n");
+                printf("Informe o ID do cliente a ser removido: ");
+                scanf("%d", &cliente.id);
+                
+                raiz = Deletar_node(raiz, cliente.id);
+
+                printf("Cliente removido com sucesso\n");
+
                 break;
             case 3:
-                printf("Buscar Clientes\n");
+                printf("Informe o nome do cliente a ser buscado: ");
+                scanf(" %[^\n]", cliente.nome);
+
+                Buscar(raiz, cliente.id);
+
                 break;
             case 4:
                 printf("Cadastrar Jogo\n");
