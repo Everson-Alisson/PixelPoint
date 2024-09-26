@@ -25,4 +25,7 @@ int max(int a, int b);
 // Função para criar um novo nó
 Node* newNode(Cliente cliente);
 
+// Função para realizar a rotação à direita
+Node *Girar_direita(Node *y);
+
 #endif

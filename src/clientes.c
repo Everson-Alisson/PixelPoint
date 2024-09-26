@@ -18,3 +18,19 @@ Node* newNode(Cliente cliente) {
     node->Altura = 1; // Novo nó é inicialmente adicionado na folha
     return(node);
 }
+
+Node *Girar_direita(Node *y) {
+    Node *x = y->esquerda;
+    Node *T2 = x->direita;
+
+    // Realiza a rotação
+    x->direita = y;
+    y->esquerda = T2;
+
+    // Atualiza alturas
+    y->Altura = max(Altura(y->esquerda), Altura(y->direita)) + 1;
+    x->Altura = max(Altura(x->esquerda), Altura(x->direita)) + 1;
+
+    // Retorna a nova raiz
+    return x;
+}
