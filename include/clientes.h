@@ -43,5 +43,7 @@ void Imprimir_AVL(Node *raiz);
 // Função para encontrar o nó com o menor valor (usado na remoção)
 Node* minValueNode(Node* node);
 
+// Função para remover um nó da árvore AVL
+Node* Deletar_node(Node* raiz, int id);
 
 #endif

@@ -121,3 +121,78 @@ Node* minValueNode(Node* node) {
         current = current->esquerda;
     return current;
 }
+
+Node* Deletar_node(Node* raiz, int id) {
+    // Passo 1: Realiza a remoção normal na árvore binária de busca
+    if (raiz == NULL){
+        printf("Cliente não encontrado\n");
+        return raiz;
+    }
+    if (id < raiz->cliente.id){
+        raiz->esquerda = Deletar_node(raiz->esquerda, id);
+        printf("Removido a esquerda\n");
+    }
+    else if (id > raiz->cliente.id){
+        raiz->direita = Deletar_node(raiz->direita, id);
+        printf("Removido a direita\n");
+    }
+    else {
+        // Nó com apenas um filho ou nenhum filho
+        if ((raiz->esquerda == NULL) || (raiz->direita == NULL)) {
+            Node *temp = raiz->esquerda ? raiz->esquerda : raiz->direita;
+
+            // Caso sem filhos
+            if (temp == NULL) {
+                temp = raiz;
+                raiz = NULL;
+            } else // Caso com um filho
+                *raiz = *temp; // Copia os conteúdos do filho não vazio
+
+            free(temp);
+        } else {
+            // Nó com dois filhos: Obtém o sucessor em ordem (menor na subárvore direita)
+            Node* temp = minValueNode(raiz->direita);
+
+            // Copia os dados do sucessor em ordem para este nó
+            raiz->cliente = temp->cliente;
+
+            // Remove o sucessor em ordem
+            raiz->direita = Deletar_node(raiz->direita, temp->cliente.id);
+        }
+    }
+
+    // Se a árvore tinha apenas um nó, então retorna
+    if (raiz == NULL){
+        return raiz;
+        printf("Árvore vazia\n");
+    }
+    // Passo 2: Atualiza a Altura do nó atual
+    raiz->Altura = 1 + max(Altura(raiz->esquerda), Altura(raiz->direita));
+
+    // Passo 3: Obtém o fator de balanceamento deste nó
+    int balance = Fator_balanceamento(raiz);
+
+    // Passo 4: Se o nó estiver desbalanceado, então existem 4 casos
+
+    // Caso Esquerda-Esquerda
+    if (balance > 1 && Fator_balanceamento(raiz->esquerda) >= 0)
+        return Girar_direita(raiz);
+
+    // Caso Esquerda-Direita
+    if (balance > 1 && Fator_balanceamento(raiz->esquerda) < 0) {
+        raiz->esquerda = Girar_esquerda(raiz->esquerda);
+        return Girar_direita(raiz);
+    }
+
+    // Caso Direita-Direita
+    if (balance < -1 && Fator_balanceamento(raiz->direita) <= 0)
+        return Girar_esquerda(raiz);
+
+    // Caso Direita-Esquerda
+    if (balance < -1 && Fator_balanceamento(raiz->direita) > 0) {
+        raiz->direita = Girar_direita(raiz->direita);
+        return Girar_esquerda(raiz);
+    }
+
+    return raiz;
+}
