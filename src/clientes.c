@@ -114,6 +114,17 @@ void Imprimir_AVL(Node *raiz) {
     }
 }
 
+Node* Buscar(Node* raiz, int id) {
+    if (raiz == NULL || raiz->cliente.id == id){
+        printf("Cliente encontrado\n");
+        return raiz;
+    }
+    if (raiz->cliente.id < id){
+        return Buscar(raiz->direita, id);
+    }   
+    return Buscar(raiz->esquerda, id);
+}
+
 Node* minValueNode(Node* node) {
     Node* current = node;
     // Loop para encontrar a folha mais à esquerda

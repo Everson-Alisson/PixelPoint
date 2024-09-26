@@ -40,6 +40,9 @@ Node* Inserir(Node* node, Cliente cliente);
 // Função para imprimir os dados inseridos na árvore AVL
 void Imprimir_AVL(Node *raiz);
 
+// Função para buscar um cliente na árvore AVL pelo ID
+Node* Buscar(Node* raiz, int id);
+
 // Função para encontrar o nó com o menor valor (usado na remoção)
 Node* minValueNode(Node* node);
 
