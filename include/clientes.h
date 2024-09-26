@@ -16,4 +16,7 @@ typedef struct Node {
     int Altura;
 } Node;
 
+// Função para obter a Altura de um nó
+int Altura(Node *N);
+
 #endif
