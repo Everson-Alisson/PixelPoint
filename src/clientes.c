@@ -113,3 +113,11 @@ void Imprimir_AVL(Node *raiz) {
         Imprimir_AVL(raiz->direita);
     }
 }
+
+Node* minValueNode(Node* node) {
+    Node* current = node;
+    // Loop para encontrar a folha mais à esquerda
+    while (current->esquerda != NULL)
+        current = current->esquerda;
+    return current;
+}

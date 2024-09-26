@@ -38,7 +38,10 @@ int Fator_balanceamento(Node *N);
 Node* Inserir(Node* node, Cliente cliente);
 
 // Função para imprimir os dados inseridos na árvore AVL
-void Imprimir_AVL(Node *raiz)
+void Imprimir_AVL(Node *raiz);
+
+// Função para encontrar o nó com o menor valor (usado na remoção)
+Node* minValueNode(Node* node);
 
 
 #endif
