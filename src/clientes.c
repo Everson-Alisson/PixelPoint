@@ -105,3 +105,11 @@ Node* Inserir(Node* node, Cliente cliente) {
     // Retorna o ponteiro do nó (inalterado)
     return node;
 }
+
+void Imprimir_AVL(Node *raiz) {
+    if (raiz != NULL) {
+        printf("%d %s\n", raiz->cliente.id, raiz->cliente.nome);
+        Imprimir_AVL(raiz->esquerda);
+        Imprimir_AVL(raiz->direita);
+    }
+}
