@@ -28,4 +28,9 @@ Node* newNode(Cliente cliente);
 // Função para realizar a rotação à direita
 Node *Girar_direita(Node *y);
 
+// Função para realizar a rotação à esquerda
+Node *Girar_esquerda(Node *x);
+
+
+
 #endif

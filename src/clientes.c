@@ -34,3 +34,19 @@ Node *Girar_direita(Node *y) {
     // Retorna a nova raiz
     return x;
 }
+
+Node *Girar_esquerda(Node *x) {
+    Node *y = x->direita;
+    Node *T2 = y->esquerda;
+
+    // Realiza a rotação
+    y->esquerda = x;
+    x->direita = T2;
+
+    // Atualiza alturas
+    x->Altura = max(Altura(x->esquerda), Altura(x->direita)) + 1;
+    y->Altura = max(Altura(y->esquerda), Altura(y->direita)) + 1;
+
+    // Retorna a nova raiz
+    return y;
+}
