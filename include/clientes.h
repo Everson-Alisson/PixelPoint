@@ -22,4 +22,7 @@ int Altura(Node *N);
 // Função para obter o valor máximo entre dois inteiros
 int max(int a, int b);
 
+// Função para criar um novo nó
+Node* newNode(Cliente cliente);
+
 #endif
