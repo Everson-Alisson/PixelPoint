@@ -9,4 +9,11 @@ typedef struct {
     char nome[100];
 } Cliente;
 
+typedef struct Node {
+    Cliente cliente;
+    struct Node *esquerda;
+    struct Node *direita;
+    int Altura;
+} Node;
+
 #endif
