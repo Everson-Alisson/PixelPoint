@@ -50,3 +50,9 @@ Node *Girar_esquerda(Node *x) {
     // Retorna a nova raiz
     return y;
 }
+
+int Fator_balanceamento(Node *N) {
+    if (N == NULL)
+        return 0;
+    return Altura(N->esquerda) - Altura(N->direita);
+}

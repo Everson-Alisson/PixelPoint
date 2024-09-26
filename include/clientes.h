@@ -31,6 +31,7 @@ Node *Girar_direita(Node *y);
 // Função para realizar a rotação à esquerda
 Node *Girar_esquerda(Node *x);
 
-
+// Função para obter o fator de balanceamento de um nó
+int Fator_balanceamento(Node *N)
 
 #endif
