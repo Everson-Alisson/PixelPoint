@@ -1,13 +1,15 @@
 #include "../include/clientes.h"
 #include "../include/jogos.h"
 
-int main () {
+int main()
+{
     int opcao;
 
-    do {
+    do
+    {
         Node *raiz = NULL;
         Cliente cliente;
-        
+
         Lista tabela[TAM];
         inicializarTabela(tabela);
 
@@ -23,62 +25,77 @@ int main () {
         printf("7|\tRealizar Venda\n");
         printf("8|\tSAIR\n");
         printf("-----------------------\n");
-        
+
         printf("Digite a opcao desejada: ");
         scanf("%d", &opcao);
 
-        switch (opcao) {
-            case 1:
-                printf("Informe o nome do cliente: ");
-                scanf(" %[^\n]", cliente.nome);
-                printf("Informe o ID do cliente: ");
-                scanf("%d", &cliente.id);
-                
-                raiz = Inserir(raiz, cliente);
+        switch (opcao)
+        {
+        case 1:
+            printf("Informe o nome do cliente: ");
+            scanf(" %[^\n]", cliente.nome);
+            printf("Informe o ID do cliente: ");
+            scanf("%d", &cliente.id);
 
+            raiz = Inserir(raiz, cliente);
+            if (raiz == NULL)
+            {
+                printf("Erro ao adicionar cliente\n");
+                break;
+            }
+            else
+            {
                 printf("Cliente adicionado com sucesso\n");
-                
-                Imprimir_AVL(raiz);
+            }
+
+            Imprimir_AVL(raiz);
+            break;
+        case 2:
+            Imprimir_AVL(raiz);
+
+            printf("----------------------------------------\n\n");
+            printf("Informe o ID do cliente a ser removido: ");
+            scanf("%d", &cliente.id);
+
+            raiz = Deletar_node(raiz, cliente.id);
+            if (raiz == NULL)
+            {
+                printf("Erro ao remover cliente\n");
                 break;
-            case 2:
-                Imprimir_AVL(raiz);
-
-                printf("----------------------------------------\n\n");
-                printf("Informe o ID do cliente a ser removido: ");
-                scanf("%d", &cliente.id);
-                
-                raiz = Deletar_node(raiz, cliente.id);
-
+            }
+            else
+            {
                 printf("Cliente removido com sucesso\n");
+            }
 
-                break;
-            case 3:
-                printf("Informe o nome do cliente a ser buscado: ");
-                scanf(" %[^\n]", cliente.nome);
+            break;
+        case 3:
+            printf("Informe o nome do cliente a ser buscado: ");
+            scanf(" %[^\n]", cliente.nome);
 
-                Imprimir_AVL(raiz);
-                Buscar(raiz, cliente.id);
+            Imprimir_AVL(raiz);
+            Buscar(raiz, cliente.id);
 
-                break;
-            case 4:
-                printf("Cadastrar Jogo\n");
-                break;
-            case 5:
-                printf("Remover Jogo\n");
-                break;
-            case 6:
-                printf("Estoque\n");
-                imprimirTabela(tabela);
-                break;
-            case 7:
-                printf("Realizar Venda\n");
-                break;
-            case 8:
-                printf("Saindo...\n");
-                return 0;
-            default:
-                printf("Opcao invalida\n");
-                break;
+            break;
+        case 4:
+            printf("Cadastrar Jogo\n");
+            break;
+        case 5:
+            printf("Remover Jogo\n");
+            break;
+        case 6:
+            printf("Estoque\n");
+            imprimirTabela(tabela);
+            break;
+        case 7:
+            printf("Realizar Venda\n");
+            break;
+        case 8:
+            printf("Saindo...\n");
+            return 0;
+        default:
+            printf("Opcao invalida\n");
+            break;
         }
     } while (opcao != 8);
 
