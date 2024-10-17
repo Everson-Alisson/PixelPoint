@@ -37,7 +37,7 @@ int Fator_balanceamento(Node *N);
 // Função para inserir um novo cliente na árvore AVL
 Node* Inserir(Node* node, Cliente cliente);
 
-// Função para imprimir os dados inseridos na árvore AVL
+// Função para imprimir a árvore AVL (em ordem)
 void Imprimir_AVL(Node *raiz);
 
 // Função para buscar um cliente na árvore AVL pelo ID
@@ -48,5 +48,6 @@ Node* minValueNode(Node* node);
 
 // Função para remover um nó da árvore AVL
 Node* Deletar_node(Node* raiz, int id);
+
 
 #endif

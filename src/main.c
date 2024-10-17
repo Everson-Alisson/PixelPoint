@@ -38,6 +38,7 @@ int main () {
 
                 printf("Cliente adicionado com sucesso\n");
                 
+                Imprimir_AVL(raiz);
                 break;
             case 2:
                 Imprimir_AVL(raiz);
@@ -55,6 +56,7 @@ int main () {
                 printf("Informe o nome do cliente a ser buscado: ");
                 scanf(" %[^\n]", cliente.nome);
 
+                Imprimir_AVL(raiz);
                 Buscar(raiz, cliente.id);
 
                 break;
