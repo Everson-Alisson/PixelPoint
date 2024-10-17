@@ -1,12 +1,15 @@
 #include "../include/clientes.h"
+#include "../include/jogos.h"
 
 int main () {
     int opcao;
 
     do {
         Node *raiz = NULL;
-        int opcao;
         Cliente cliente;
+        
+        Lista tabela[TAM];
+        inicializarTabela(tabela);
 
         printf("-------------------------\n");
         printf("\tMENU\n");
@@ -62,7 +65,7 @@ int main () {
                 printf("Remover Jogo\n");
                 break;
             case 6:
-                printf("Estoque\n");
+                imprimirTabela(tabela);
                 break;
             case 7:
                 printf("Realizar Venda\n");
