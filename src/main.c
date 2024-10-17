@@ -67,6 +67,7 @@ int main () {
                 printf("Remover Jogo\n");
                 break;
             case 6:
+                printf("Estoque\n");
                 imprimirTabela(tabela);
                 break;
             case 7:
