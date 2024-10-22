@@ -80,6 +80,28 @@ void imprimirTabela(Lista tabela[]) {
     }
 }
 
+void excluirJogo(Lista tabela[], const char* nome) {
+    for (int i = 0; i < TAM; i++) {
+        No *atual = tabela[i].inicio;
+        No *anterior = NULL;
+        while (atual != NULL) {
+            if (strcmp(atual->jogo->nome, nome) == 0) {
+                if (anterior == NULL) {
+                    tabela[i].inicio = atual->prox;
+                } else {
+                    anterior->prox = atual->prox;
+                }
+                free(atual->jogo);
+                free(atual);
+                tabela[i].tamanho--;
+                return;
+            }
+            anterior = atual;
+            atual = atual->prox;
+        }
+    }
+}
+
 // int main() {
 //     Lista tabela[TAM];
 //     inicializarTabela(tabela);

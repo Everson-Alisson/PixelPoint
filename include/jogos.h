@@ -53,4 +53,7 @@ void imprimirLista(Lista *lista);
 // Função que imprime a tabela
 void imprimirTabela(Lista tabela[]);
 
+// Função que exclui um jogo
+void excluirJogo(Lista tabela[], const char* nome);
+
 #endif
