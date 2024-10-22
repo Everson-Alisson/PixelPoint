@@ -1,17 +1,15 @@
 #include "../include/clientes.h"
 #include "../include/jogos.h"
 
-int main()
-{
+int main() {
     int opcao;
+    Node *raiz = NULL;
+    Lista tabela[TAM];
+    inicializarTabela(tabela);
 
-    do
-    {
-        Node *raiz = NULL;
+    do {
         Cliente cliente;
-
-        Lista tabela[TAM];
-        inicializarTabela(tabela);
+        Jogo jogos;
 
         printf("-------------------------\n");
         printf("\tMENU\n");
@@ -22,15 +20,14 @@ int main()
         printf("4|\tCadastrar Jogo\n");
         printf("5|\tRemover Jogo\n");
         printf("6|\tEstoque\n");
-        printf("7|\tRealizar Venda\n");
+        printf("7|\tBuscar Jogo\n");
         printf("8|\tSAIR\n");
         printf("-----------------------\n");
 
         printf("Digite a opcao desejada: ");
         scanf("%d", &opcao);
 
-        switch (opcao)
-        {
+        switch (opcao) {
         case 1:
             printf("Informe o nome do cliente: ");
             scanf(" %[^\n]", cliente.nome);
@@ -38,13 +35,10 @@ int main()
             scanf("%d", &cliente.id);
 
             raiz = Inserir(raiz, cliente);
-            if (raiz == NULL)
-            {
+            if (raiz == NULL) {
                 printf("Erro ao adicionar cliente\n");
                 break;
-            }
-            else
-            {
+            } else {
                 printf("Cliente adicionado com sucesso\n");
             }
 
@@ -58,13 +52,10 @@ int main()
             scanf("%d", &cliente.id);
 
             raiz = Deletar_node(raiz, cliente.id);
-            if (raiz == NULL)
-            {
+            if (raiz == NULL) {
                 printf("Erro ao remover cliente\n");
                 break;
-            }
-            else
-            {
+            } else {
                 printf("Cliente removido com sucesso\n");
             }
 
@@ -78,17 +69,32 @@ int main()
 
             break;
         case 4:
-            printf("Cadastrar Jogo\n");
+            printf("Informe o nome do jogo: ");
+            scanf(" %[^\n]", jogos.nome);
+            printf("Informe o preço do jogo: ");
+            scanf("%f", &jogos.preco);
+            printf("Informe a quantidade do jogo: ");
+            scanf("%d", &jogos.quantidade);
+
+            criarJogo(jogos.id, jogos.nome, jogos.preco, jogos.quantidade);
+            inserirNaTabela(tabela, &jogos);
+            
+            printf("Jogo cadastrado com sucesso!\n");
             break;
         case 5:
-            printf("Remover Jogo\n");
+            printf("Informe o nome do jogo a ser removido: ");
+            scanf(" %[^\n]", jogos.nome);
+            excluirJogo(tabela, jogos.nome);
+            printf("Jogo removido com sucesso!\n");
             break;
         case 6:
             printf("Estoque\n");
             imprimirTabela(tabela);
             break;
         case 7:
-            printf("Realizar Venda\n");
+            printf("Informe o nome do jogo a ser buscado: ");
+            scanf(" %[^\n]", jogos.nome);
+            buscarNaTabela(tabela, jogos.id);
             break;
         case 8:
             printf("Saindo...\n");
