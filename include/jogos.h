@@ -22,6 +22,11 @@ typedef struct Lista {
     No *inicio;
 } Lista;
 
+typedef struct Heap {
+    Jogo *jogos[TAM];
+    int tamanho;
+} Heap;
+
 // Função que calcula o hash de uma string
 int funcaoHash(const char *nome);
 
@@ -57,5 +62,13 @@ int gerarIdUnico();
 
 // Função que exclui um jogo da tabela
 void excluirJogo(Lista tabela[], const char* nome);
+
+void inicializarHeap(Heap *heap);
+void inserirNoHeap(Heap *heap, Jogo *jogo);
+Jogo *removerDoHeap(Heap *heap);
+void imprimirHeap(Heap *heap);
+void removerDoHeapPorNome(Heap *heap, const char *nome);
+void realizarVenda(Lista tabela[], Heap *heap, const char *nome, int quantidade);
+void reabastecerEstoque(Lista tabela[], Heap *heap, const char *nome, int quantidade);
 
 #endif

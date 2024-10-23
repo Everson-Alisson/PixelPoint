@@ -111,3 +111,151 @@ void excluirJogo(Lista tabela[], const char* nome) {
         atual = atual->prox;
     }
 }
+
+void inicializarHeap(Heap *heap) {
+    heap->tamanho = 0;
+}
+
+void inserirNoHeap(Heap *heap, Jogo *jogo) {
+    if (heap->tamanho >= TAM) {
+        printf("Heap cheio\n");
+        return;
+    }
+
+    int i = heap->tamanho;
+    heap->jogos[i] = jogo;
+    heap->tamanho++;
+
+    while (i != 0 && heap->jogos[(i - 1) / 2]->quantidade > heap->jogos[i]->quantidade) {
+        Jogo *temp = heap->jogos[i];
+        heap->jogos[i] = heap->jogos[(i - 1) / 2];
+        heap->jogos[(i - 1) / 2] = temp;
+        i = (i - 1) / 2;
+    }
+}
+
+Jogo *removerDoHeap(Heap *heap) {
+    if (heap->tamanho <= 0) {
+        printf("Heap vazio\n");
+        return NULL;
+    }
+
+    Jogo *raiz = heap->jogos[0];
+    heap->jogos[0] = heap->jogos[heap->tamanho - 1];
+    heap->tamanho--;
+
+    int i = 0;
+    while (2 * i + 1 < heap->tamanho) {
+        int menor = 2 * i + 1;
+        if (2 * i + 2 < heap->tamanho && heap->jogos[2 * i + 2]->quantidade < heap->jogos[menor]->quantidade) {
+            menor = 2 * i + 2;
+        }
+
+        if (heap->jogos[i]->quantidade <= heap->jogos[menor]->quantidade) {
+            break;
+        }
+
+        Jogo *temp = heap->jogos[i];
+        heap->jogos[i] = heap->jogos[menor];
+        heap->jogos[menor] = temp;
+        i = menor;
+    }
+
+    return raiz;
+}
+
+void removerDoHeapPorNome(Heap *heap, const char *nome) {
+    int i;
+    for (i = 0; i < heap->tamanho; i++) {
+        if (strcmp(heap->jogos[i]->nome, nome) == 0) {
+            break;
+        }
+    }
+
+    if (i == heap->tamanho) {
+        printf("Jogo não encontrado no heap\n");
+        return;
+    }
+
+    heap->jogos[i] = heap->jogos[heap->tamanho - 1];
+    heap->tamanho--;
+
+    while (i != 0 && heap->jogos[(i - 1) / 2]->quantidade > heap->jogos[i]->quantidade) {
+        Jogo *temp = heap->jogos[i];
+        heap->jogos[i] = heap->jogos[(i - 1) / 2];
+        heap->jogos[(i - 1) / 2] = temp;
+        i = (i - 1) / 2;
+    }
+
+    while (2 * i + 1 < heap->tamanho) {
+        int menor = 2 * i + 1;
+        if (2 * i + 2 < heap->tamanho && heap->jogos[2 * i + 2]->quantidade < heap->jogos[menor]->quantidade) {
+            menor = 2 * i + 2;
+        }
+
+        if (heap->jogos[i]->quantidade <= heap->jogos[menor]->quantidade) {
+            break;
+        }
+
+        Jogo *temp = heap->jogos[i];
+        heap->jogos[i] = heap->jogos[menor];
+        heap->jogos[menor] = temp;
+        i = menor;
+    }
+}
+
+void imprimirHeap(Heap *heap) {
+    printf("Itens por ordem de reabastecimento\n");
+    for (int i = 0; i < heap->tamanho; i++) {
+        printf("Nome: %s, Preco: %.2f, Quantidade: %d\n", heap->jogos[i]->nome, heap->jogos[i]->preco, heap->jogos[i]->quantidade);
+    }
+}
+
+void realizarVenda(Lista tabela[], Heap *heap, const char *nome, int quantidade) {
+    int chave = funcaoHash(nome);
+    No *atual = tabela[chave].inicio;
+
+    while (atual != NULL && strcmp(atual->jogo->nome, nome) != 0) {
+        atual = atual->prox;
+    }
+
+    if (atual == NULL) {
+        printf("Jogo não encontrado na tabela\n");
+        return;
+    }
+
+    if (atual->jogo->quantidade < quantidade) {
+        printf("Quantidade insuficiente em estoque\n");
+        return;
+    }
+
+    atual->jogo->quantidade -= quantidade;
+
+    // Atualizar a heap
+    removerDoHeapPorNome(heap, nome);
+    inserirNoHeap(heap, atual->jogo);
+
+    printf("Venda realizada com sucesso\n");
+}
+
+void reabastecerEstoque(Lista tabela[], Heap *heap, const char *nome, int quantidade) {
+    int chave = funcaoHash(nome);
+    No *atual = tabela[chave].inicio;
+
+    while (atual != NULL && strcmp(atual->jogo->nome, nome) != 0) {
+        atual = atual->prox;
+    }
+
+    if (atual == NULL) {
+        printf("Jogo não encontrado na tabela\n");
+        return;
+    }
+
+    atual->jogo->quantidade += quantidade;
+
+    // Atualizar a heap
+    removerDoHeapPorNome(heap, nome);
+    inserirNoHeap(heap, atual->jogo);
+
+    printf("Estoque reabastecido com sucesso\n");
+}

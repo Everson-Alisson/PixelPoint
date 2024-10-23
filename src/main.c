@@ -4,7 +4,9 @@
 int main() {
     Node *raiz = NULL;
     Lista tabela[TAM];
+    Heap heap;
     inicializarTabela(tabela);
+    inicializarHeap(&heap);
     
     Cliente cliente;
     Jogo jogos;
@@ -22,7 +24,9 @@ int main() {
         printf("5|\tRemover Jogo\n");
         printf("6|\tEstoque\n");
         printf("7|\tBuscar Jogo\n");
-        printf("8|\tSAIR\n");
+        printf("8|\tRealizar Venda\n");
+        printf("9|\tReabastecer Estoque\n");
+        printf("0|\tSAIR\n");
         printf("-----------------------\n");
 
         printf("Digite a opcao desejada: ");
@@ -86,6 +90,7 @@ int main() {
                     jogos.id = gerarIdUnico();
 
                     inserirNaTabela(tabela, jogos.id, jogos.nome, jogos.preco, jogos.quantidade);
+                    inserirNoHeap(&heap, criarJogo(jogos.id, jogos.nome, jogos.preco, jogos.quantidade));
 
                     printf("Jogo cadastrado com sucesso!\n");
                     
@@ -98,6 +103,7 @@ int main() {
                 printf("Informe o nome do jogo a ser removido: ");
                 scanf(" %[^\n]", jogos.nome);
                 excluirJogo(tabela, jogos.nome);
+                removerDoHeapPorNome(&heap, jogos.nome);
                 printf("Jogo removido com sucesso!\n");
                 
                 break;
@@ -109,17 +115,36 @@ int main() {
         case 7:
             printf("Informe o nome do jogo a ser buscado: ");
             scanf(" %[^\n]", jogos.nome);
-            buscarNaTabela(tabela, jogos.id);
+            buscarNaTabela(tabela, jogos.nome);
             
             break;
         case 8:
+            printf("Informe o nome do jogo a ser vendido: ");
+            scanf(" %[^\n]", jogos.nome);
+            printf("Informe a quantidade do jogo a ser vendida: ");
+            scanf("%d", &jogos.quantidade);
+            realizarVenda(tabela, &heap, jogos.nome, jogos.quantidade);
+            break;
+
+        case 9:
+            printf("Reabastecer Estoque\n");
+            imprimirHeap(&heap);
+            printf("Informe o nome do jogo a ser reabastecido: ");
+            scanf(" %[^\n]", jogos.nome);
+            printf("Informe a quantidade do jogo a ser reabastecida: ");
+            scanf("%d", &jogos.quantidade);
+            reabastecerEstoque(tabela, &heap, jogos.nome, jogos.quantidade);
+            break;
+
+        case 0:
             printf("Saindo...\n");
             return 0;
+        
         default:
             printf("Opcao invalida\n");
             break;
         }
-    } while (opcao != 8);
+    } while (opcao != 0);
 
     return 0;
 }
