@@ -1,42 +1,17 @@
 #include "../include/jogos.h"
 
-void inicializarLista(Lista *lista) {
-    lista->inicio = NULL;
-    lista->tamanho = 0;
-}
-
-void inicializarTabela(Lista tabela[]) {
-    for (int i = 0; i < TAM; i++) {
-        inicializarLista(&tabela[i]);
+int funcaoHash(const char *nome) {
+    int hash = 0;
+    while (*nome) {
+        hash += *nome++;
     }
+    return hash % TAM;
 }
 
-int funcaoHash(int chave) {
-    return chave % TAM;
-}
-
-void inserirNaLista(Lista *lista, Jogo *jogo) {
-    No *novo = malloc(sizeof(No));
-    if (novo == NULL) {
-        printf("Erro de alocação\n");
-        exit(1);
-    }
-
-    novo->jogo = jogo;
-    novo->prox = lista->inicio;
-    lista->inicio = novo;
-    lista->tamanho++;
-}
-
-void inserirNaTabela(Lista tabela[], Jogo *jogo) {
-    int id = funcaoHash(jogo->id);
-    inserirNaLista(&tabela[id], jogo);
-}
-
-int buscarNaLista(Lista *lista, int chave) {
+int buscarNaLista(Lista *lista, const char *nome) {
     No *atual = lista->inicio;
     while (atual != NULL) {
-        if (atual->jogo->id == chave) {
+        if (strcmp(atual->jogo->nome, nome) == 0) {
             return 1; // Encontrado
         }
         atual = atual->prox;
@@ -44,9 +19,13 @@ int buscarNaLista(Lista *lista, int chave) {
     return 0; // Não encontrado
 }
 
-int buscarNaTabela(Lista tabela[], int chave) {
-    int id = funcaoHash(chave);
-    return buscarNaLista(&tabela[id], chave);
+int buscarNaTabela(Lista tabela[], const char *nome) {
+    int id = funcaoHash(nome);
+    return buscarNaLista(&tabela[id], nome);
+}
+
+int jogoExiste(Lista tabela[], const char *nome) {
+    return buscarNaTabela(tabela, nome);
 }
 
 Jogo* criarJogo(int id, const char* nome, float preco, int quantidade) {
@@ -65,6 +44,27 @@ Jogo* criarJogo(int id, const char* nome, float preco, int quantidade) {
     return novoJogo;
 }
 
+void inserirNaLista(Lista *lista, Jogo *jogo) {
+    No *novoNo = malloc(sizeof(No));
+    if (novoNo == NULL) {
+        printf("Erro de alocação\n");
+        exit(1);
+    }
+    novoNo->jogo = jogo;
+    novoNo->prox = lista->inicio;
+    lista->inicio = novoNo;
+}
+
+void inserirNaTabela(Lista tabela[], int chave, const char* nome, float preco, int quantidade) {
+    if (jogoExiste(tabela, nome)) {
+        printf("Erro: Jogo com o nome '%s' já existe.\n", nome);
+        return;
+    }
+    int id = funcaoHash(nome);
+    Jogo *novoJogo = criarJogo(chave, nome, preco, quantidade);
+    inserirNaLista(&tabela[id], novoJogo);
+}
+
 void imprimirLista(Lista *lista) {
     No *atual = lista->inicio;
     while (atual != NULL) {
@@ -75,44 +75,39 @@ void imprimirLista(Lista *lista) {
 
 void imprimirTabela(Lista tabela[]) {
     for (int i = 0; i < TAM; i++) {
-        printf("Tabela[%d]:\n", i);
+        printf("Lista %d:\n", i);
         imprimirLista(&tabela[i]);
     }
 }
 
-void excluirJogo(Lista tabela[], const char* nome) {
+void inicializarTabela(Lista tabela[]) {
     for (int i = 0; i < TAM; i++) {
-        No *atual = tabela[i].inicio;
-        No *anterior = NULL;
-        while (atual != NULL) {
-            if (strcmp(atual->jogo->nome, nome) == 0) {
-                if (anterior == NULL) {
-                    tabela[i].inicio = atual->prox;
-                } else {
-                    anterior->prox = atual->prox;
-                }
-                free(atual->jogo);
-                free(atual);
-                tabela[i].tamanho--;
-                return;
-            }
-            anterior = atual;
-            atual = atual->prox;
-        }
+        tabela[i].inicio = NULL;
     }
 }
 
-// int main() {
-//     Lista tabela[TAM];
-//     inicializarTabela(tabela);
+int gerarIdUnico() {
+    static int id = 0;
+    return ++id;
+}
 
-//     Jogo *jogo1 = criarJogo(1, "Jogo A", 59.99, 10);
-//     inserirNaTabela(tabela, jogo1);
+void excluirJogo(Lista tabela[], const char* nome) {
+    int id = funcaoHash(nome);
+    No *atual = tabela[id].inicio;
+    No *anterior = NULL;
 
-//     Jogo *jogo2 = criarJogo(2, "Jogo B", 39.99, 5);
-//     inserirNaTabela(tabela, jogo2);
-
-//     imprimirTabela(tabela);
-
-//     return 0;
-// }
+    while (atual != NULL) {
+        if (strcmp(atual->jogo->nome, nome) == 0) {
+            if (anterior == NULL) {
+                tabela[id].inicio = atual->prox;
+            } else {
+                anterior->prox = atual->prox;
+            }
+            free(atual->jogo);
+            free(atual);
+            return;
+        }
+        anterior = atual;
+        atual = atual->prox;
+    }
+}

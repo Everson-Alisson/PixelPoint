@@ -4,48 +4,44 @@
 
 #ifndef JOGOS_H
 
-#define TAM 31
+#define TAM 10
 
-typedef struct jogos {
+typedef struct Jogo {
     int id;
     char nome[50];
     float preco;
     int quantidade;
 } Jogo;
 
-typedef struct no {
+typedef struct No {
     Jogo *jogo;
-    struct no *prox;
+    struct No *prox;
 } No;
 
-typedef struct {
+typedef struct Lista {
     No *inicio;
-    int tamanho;
 } Lista;
 
-// Função para inicializar uma lista
-void inicializarLista(Lista *lista);
+// Função que calcula o hash de uma string
+int funcaoHash(const char *nome);
 
-// Função que incializa a tabela hash
-void inicializarTabela(Lista tabela[]);
+// Função que busca um jogo na lista
+int buscarNaLista(Lista *lista, const char *nome);
 
-// Função que calcula o índice da tabela
-int funcaoHash(int chave);
+// Função que busca um jogo na tabela
+int buscarNaTabela(Lista tabela[], const char *nome);
 
-// Função que insere um novo elemento na lista
+// Função que verifica se um jogo já existe na tabela
+int jogoExiste(Lista tabela[], const char *nome);
+
+// Função que cria um novo jogo
+Jogo* criarJogo(int id, const char* nome, float preco, int quantidade);
+
+// Função que insere um jogo na lista
 void inserirNaLista(Lista *lista, Jogo *jogo);
 
-// Função que insere um novo elemento na tabela
-void inserirNaTabela(Lista tabela[], Jogo *jogo);
-
-// Função para realizar uma busca na lista
-int buscarNaLista(Lista *lista, int chave);
-
-// Função para realizar uma busca na tabela
-int buscarNaTabela(Lista tabela[], int chave);
-
-// Função para criar um novo jogo
-Jogo* criarJogo(int id, const char* nome, float preco, int quantidade);
+// Função que insere um jogo na tabela
+void inserirNaTabela(Lista tabela[], int chave, const char* nome, float preco, int quantidade);
 
 // Função que imprime a lista
 void imprimirLista(Lista *lista);
@@ -53,7 +49,13 @@ void imprimirLista(Lista *lista);
 // Função que imprime a tabela
 void imprimirTabela(Lista tabela[]);
 
-// Função que exclui um jogo
+// Função que inicializa a tabela
+void inicializarTabela(Lista tabela[]);
+
+// Função que gera um id único
+int gerarIdUnico();
+
+// Função que exclui um jogo da tabela
 void excluirJogo(Lista tabela[], const char* nome);
 
 #endif
