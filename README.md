@@ -19,15 +19,15 @@
 Neste arquivo você verá:
 - [IA's utilizadas](#1.0-IA's-utilizadas)
 - [Introdução](#2.0-Introdução)
-- [Organizalção do código](#3.0-Organização)
+- [Organização do código](#3.0-Organização)
 - [Problemática](#4.0-problemática)
 - [Descrição](#5.0-descrição)
 - [Árvore de busca binária ](#6.0-Avl)
 - [Tabela Hash](#7.0-Hash)
-- [Pré-requisitos para compilar](#8.0-Pre-requisitos)
-- [Execução do Projeto](#9.0-Execução-do-projeto)
-- [Compilação do Código](#9.1-compilação-do-codigo)
-- [Execução do Código](#9.2-execução-do-codigo)
+- [Heap](#8.0-Heap)
+- [Funções](#9.0-Menu)
+- [Pré-requisitos para compilar](#10.0-Pre-requisitos)
+- [Execução do Projeto](#11.0-Execução-do-projeto)
 
 ## **1.0-IA's utlizada**
 
@@ -37,7 +37,7 @@ Neste arquivo você verá:
 
 ## **2.0-Introdução**
 
-Um sistema usado para gerenciar uma loja de jogos, com os seguintes atributos, cadastrar/remover clientes, cadastrar/remover mercadoria (separando por categoria), ter o controle de estoque e realizar vendas.
+Um sistema usado para gerenciar uma loja de jogos, com os seguintes atributos, cadastrar/buscar/remover clientes, cadastrar/buscar/remover mercadoria, ter o controle de estoque e realizar vendas.
 
 ## **3.0-Organização**
 
@@ -67,14 +67,15 @@ Projete um sistema em alguma linguagem que faça uso de ponteiros para gerenciar
 ## **5.0-Descrição**
 
 #### O programa deve conter os seguintes atributos:<br>
-- Cadastrar e remover jogos separados por categoria<br>
-- Cadastrar e remover clientes<br>
+- Cadastrar, buscar e remover jogos<br>
+- Cadastrar, buscar e remover clientes<br>
 - Ter o controle de estoque<br>
 - Realizar vendas<br>
 
 #### O programa irá utilizar as seguintes estruturas de dados<br>
 - Arvore de busca binária ou AVL
 - Tabela Hash
+- Heap
 
 ## **6.0-Arvore de busca Binária**
 
@@ -98,8 +99,9 @@ Mapear as mercadorias por categoria, facilitando o controle de estoque da loja.
 A estrutura de dados heap, também conhecida como heap binária, é uma árvore binária que organiza um conjunto de elementos. É uma estrutura útil para implementar filas de prioridade, pois permite adicionar e extrair o elemento de maior prioridade em tempo O(logn).
 
 #### Qual a função dela no programa?
+Ela armazena os jogos e coloca como prioridade o que está com menos itens no estoque
 
-## **9.0-Menu** 
+## **9.0-Funções** 
 ```
 ---------------------------------
             MENU
@@ -117,32 +119,84 @@ A estrutura de dados heap, também conhecida como heap binária, é uma árvore 
 ```
 ## **9.1-Adicionar/Remover/Burscar Clientes**
 ```
+---------------------------------
 1 - Adicionar Cliente
 2 - Remover Cliente
 3 - Buscar Clientes
+---------------------------------
 ```
 #### As funções como adicionar/buscar e remover clientes, foram implementadas usando Arvore de Busca Binária(AVL). O que nos levou a usar ela, foi o fato de que os elementos são inseridos de forma hierarquica, facilitando assim as operações como por exemplo a de busca 
+### **Função adicionar cliente**
+```
+Node* Inserir(Node* node, Cliente cliente);
+```
+##### A função Inserir insere um novo nó em uma árvore AVL com base no ID do cliente, realiza a inserção normal de uma árvore binária de busca e aplica rotações para manter o balanceamento da árvore. Ela lida com a atualização da altura e do fator de balanceamento após a inserção.
+### **Função de remover cliente**
+```
+Node* Deletar_node(Node* raiz, int id);
+```
+##### A função Deletar_node remove um nó de uma árvore AVL com base no ID fornecido, realiza a remoção normal de uma árvore binária de busca e aplica rotações para manter o balanceamento da árvore. Ela lida com nós com nenhum, um ou dois filhos e atualiza a altura e o fator de balanceamento após a remoção.
+### **Função de buscar cliente**
+```
+Node* Buscar(Node* raiz, int id);
+```
+##### A função Buscar busca um nó em uma árvore AVL com base no ID do cliente. Ela percorre a árvore recursivamente, comparando o ID fornecido com o ID dos nós, até encontrar o nó correspondente ou chegar a um nó nulo. Se o cliente for encontrado, a função retorna o nó correspondente; caso contrário, retorna NULL.
 ## **9.2-Cadastrar Jogo/Estoque/Buscar Jogo/Realizar Venda/Reabastecer Estoque**
 ```
+---------------------------------
 4 - Cadastrar Jogo
 5 - Remover Jogo
 6 - Estoque
 7 - Buscar Jogo
 8 - Realizar Venda
 9 - Reabastecer Estoque
+---------------------------------
 ```
-#### As 5 funções referentes aos jogos, utilizaram duas estruturas de dados, a tabela Hash e a Heap. A escolha da tabela hash vem pelo fato que ela mapeia os jogos dando valores a eles, assim facilitando na hora das buscas que seriam utilizadas para as demais funções como por exemplo a de realizar venda.(falta falar sobre a hash)
-## . Pré-Requisitos
+#### As 5 funções referentes aos jogos, utilizaram duas estruturas de dados, a tabela Hash e a Heap. A escolha da tabela hash vem pelo fato que ela mapeia os jogos dando valores a eles, assim facilitando na hora das buscas que seriam utilizadas para as demais funções como por exemplo a de realizar venda e a Heap fui utilizada para armazenar os jogos e colocar como prioridade os que tem menos estoque
+### **Função cadastrar jogo**
+```
+Jogo* criarJogo(int id, const char* nome, float preco, int quantidade);
+```
+##### A função criarJogo aloca memória para um novo jogo, inicializa seus campos com os valores fornecidos (ID, nome, preço e quantidade) e retorna um ponteiro para o novo jogo. Se a alocação de memória falhar, a função imprime uma mensagem de erro e encerra o programa.
+### **Função remover jogo**
+```
+void excluirJogo(Lista tabela[], const char* nome);
+```
+##### A função excluirJogo remove um jogo de uma tabela hash com base no nome fornecido. Ela calcula o índice usando uma função hash, percorre a lista encadeada no índice correspondente, encontra o jogo com o nome especificado, remove o nó da lista e libera a memória alocada para o jogo e o nó.
+### **Função estoque**
+```
+void imprimirTabela(Lista tabela[]);
+```
+##### A função imprimirTabela percorre todas as listas em uma tabela hash e imprime o conteúdo de cada lista. Para cada índice da tabela, a função chama imprimirLista para imprimir os elementos da lista correspondente.
+
+### **Função buscar jogo**
+```
+int buscarNaTabela(Lista tabela[], const char *nome);
+```
+##### A função buscarNaTabela busca um jogo em uma tabela hash com base no nome fornecido. Ela calcula o índice usando uma função hash e chama a função buscarNaLista para procurar o jogo na lista encadeada no índice correspondente. Retorna um valor indicando se o jogo foi encontrado.
+
+### **Função realizar venda**
+```
+void realizarVenda(Lista tabela[], Heap *heap, const char *nome, int quantidade);
+```
+##### A função realizarVenda realiza a venda de um jogo, atualizando a quantidade em estoque e a heap. Ela busca o jogo na tabela hash pelo nome, verifica se há quantidade suficiente em estoque, decrementa a quantidade vendida e atualiza a heap removendo e reinserindo o jogo. Se o jogo não for encontrado ou a quantidade for insuficiente, a função imprime uma mensagem de erro.
+### **Função reabastecer estoque**
+```
+void reabastecerEstoque(Lista tabela[], Heap *heap, const char *nome, int quantidade);
+```
+##### A função reabastecerEstoque reabastece o estoque de um jogo na tabela hash com base no nome fornecido. Ela busca o jogo na tabela, incrementa a quantidade em estoque e atualiza a heap removendo e reinserindo o jogo. Se o jogo não for encontrado, a função imprime uma mensagem de erro.
+
+## 10.0 Pré-Requisitos
 
 Para executar o código é necessário um compilador C instalado. Recomendamos o uso do [GCC](https://gcc.gnu.org/).
 
-## . Execução do Projeto
-### .1 Compilação do Código
+## 11.0 Execução do Projeto
+### 11.1 Compilação do Código
 Para compilar o código, abra o terminal e navegue até a pasta `linguagem_c` e execute o seguinte comando:
 ```
-gcc src/main.c src/clientes.c src/jogos.c src/sistema.c -o main
+gcc main.c clientes.c jogos.c sistema.c -o main
 ```
-### .2 Execução do Código
+### 11.2 Execução do Código
 Para executar o código, digite o comando:
 ```
 ./main
