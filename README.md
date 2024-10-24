@@ -44,8 +44,19 @@ Um sistema usado para gerenciar uma loja de jogos, com os seguintes atributos, c
 ``` 
 📁 - PixelPoint
 │
-├───include
-├───src
+└─── include
+        │
+        ├──clientes.h
+        ├──jogos.h
+        ├──sistema.h
+│
+└─── src
+        │
+        ├──clientes.c
+        ├──jogos.c
+        ├──main.c
+        ├──sistema.c
+│
 └───README.md
 ```
 
@@ -81,17 +92,57 @@ Uma tabela hash é uma estrutura de dados que mapeia chaves a valores de maneira
 #### Qual a função dela no programa?
 Mapear as mercadorias por categoria, facilitando o controle de estoque da loja.
 
-## 8. Pré-Requisitos
+## **8.0-Heap**
+
+#### Como funciona a Heap?<br>
+A estrutura de dados heap, também conhecida como heap binária, é uma árvore binária que organiza um conjunto de elementos. É uma estrutura útil para implementar filas de prioridade, pois permite adicionar e extrair o elemento de maior prioridade em tempo O(logn).
+
+#### Qual a função dela no programa?
+
+## **9.0-Menu** 
+```
+---------------------------------
+            MENU
+1 - Adicionar Cliente
+2 - Remover Cliente
+3 - Buscar Clientes
+4 - Cadastrar Jogo
+5 - Remover Jogo
+6 - Estoque
+7 - Buscar Jogo
+8 - Realizar Venda
+9 - Reabastecer Estoque
+0 - SAIR
+---------------------------------
+```
+## **9.1-Adicionar/Remover/Burscar Clientes**
+```
+1 - Adicionar Cliente
+2 - Remover Cliente
+3 - Buscar Clientes
+```
+#### As funções como adicionar/buscar e remover clientes, foram implementadas usando Arvore de Busca Binária(AVL). O que nos levou a usar ela, foi o fato de que os elementos são inseridos de forma hierarquica, facilitando assim as operações como por exemplo a de busca 
+## **9.2-Cadastrar Jogo/Estoque/Buscar Jogo/Realizar Venda/Reabastecer Estoque**
+```
+4 - Cadastrar Jogo
+5 - Remover Jogo
+6 - Estoque
+7 - Buscar Jogo
+8 - Realizar Venda
+9 - Reabastecer Estoque
+```
+#### As 5 funções referentes aos jogos, utilizaram duas estruturas de dados, a tabela Hash e a Heap. A escolha da tabela hash vem pelo fato que ela mapeia os jogos dando valores a eles, assim facilitando na hora das buscas que seriam utilizadas para as demais funções como por exemplo a de realizar venda.(falta falar sobre a hash)
+## . Pré-Requisitos
 
 Para executar o código é necessário um compilador C instalado. Recomendamos o uso do [GCC](https://gcc.gnu.org/).
 
-## 9. Execução do Projeto
-### 9.1 Compilação do Código
+## . Execução do Projeto
+### .1 Compilação do Código
 Para compilar o código, abra o terminal e navegue até a pasta `linguagem_c` e execute o seguinte comando:
 ```
-gcc -o main main.c 
+gcc src/main.c src/clientes.c src/jogos.c src/sistema.c -o main
 ```
-### 9.2 Execução do Código
+### .2 Execução do Código
 Para executar o código, digite o comando:
 ```
 ./main
