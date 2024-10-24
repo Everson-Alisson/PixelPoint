@@ -12,11 +12,11 @@ int buscarNaLista(Lista *lista, const char *nome) {
     No *atual = lista->inicio;
     while (atual != NULL) {
         if (strcmp(atual->jogo->nome, nome) == 0) {
-            return 1; // Encontrado
+            return 1;
         }
         atual = atual->prox;
     }
-    return 0; // Não encontrado
+    return 0;
 }
 
 int buscarNaTabela(Lista tabela[], const char *nome) {
@@ -111,6 +111,7 @@ void excluirJogo(Lista tabela[], const char* nome) {
         atual = atual->prox;
     }
 }
+
 
 void inicializarHeap(Heap *heap) {
     heap->tamanho = 0;
