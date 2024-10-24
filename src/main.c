@@ -16,6 +16,7 @@ int main() {
     int verificacao;
 
     do {
+        limparTela();
         printf("-------------------------\n");
         printf("\tMENU\n");
         printf("-------------------------\n");
@@ -34,37 +35,31 @@ int main() {
         printf("Digite a opcao desejada: ");
         scanf("%c", &opcao);
         verificacao = verificaEscolha(opcao);
-        pressioneENTER();
-        limparTela();
 
         switch (opcao) {
         case '1':
+            limparTela();
             printf("Informe o nome do cliente: ");
             scanf(" %[^\n]", cliente.nome);
             
             verificacao = VerificaNome(cliente.nome);
             
-            if(verificacao == 1){
-                    while(VerificaNome(cliente.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do cliente: ");
-                    scanf(" %[^\n]", cliente.nome);
-                    }
-                }
+            if(verificacao == 1) {
+                printf("Nome invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
             
-            printf("Informe o ID do cliente: ");
+            printf("Informe o CPF do cliente: ");
             scanf("%d", &cliente.id); 
             verificacao = VerificanumInt(&cliente.id);
-                if(verificacao == 0){
-                    printf("ID invalido, tente novamente\n");
-                    break;
-                }
+                
+            if(verificacao == 1){
+                printf("CPF invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
+
             raiz = Inserir(raiz, cliente);
             if (raiz == NULL) {
                 printf("Erro ao adicionar cliente\n");
@@ -73,21 +68,23 @@ int main() {
                 printf("Cliente adicionado com sucesso\n");
             }
 
-            Imprimir_AVL(raiz);
+            pressioneENTER();
             
             break;
         case '2':
+            limparTela();
             Imprimir_AVL(raiz);
 
             printf("----------------------------------------\n\n");
-            printf("Informe o ID do cliente a ser removido: ");
+            printf("Informe o CPF do cliente a ser removido: ");
             scanf("%d", &cliente.id);
-            
             verificacao = VerificanumInt(&cliente.id);
-                if(verificacao == 0){
-                    printf("ID invalido, tente novamente\n");
-                    break;
-                }
+                
+            if(verificacao == 1){
+                printf("CPF invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
             
             raiz = Deletar_node(raiz, cliente.id);
             if (raiz == NULL) {
@@ -97,56 +94,59 @@ int main() {
                 printf("Cliente removido com sucesso\n");
             }
 
+            pressioneENTER();
+
             break;
         case '3':
+            limparTela();
             printf("Informe o nome do cliente a ser buscado: ");
             scanf(" %[^\n]", cliente.nome);
             
             verificacao = VerificaNome(cliente.nome);
             
             if(verificacao == 1){
-                    while(VerificaNome(cliente.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do cliente: ");
-                    scanf(" %[^\n]", cliente.nome);
-                    }
-                }
+                printf("Nome invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
 
             Imprimir_AVL(raiz);
             Buscar(raiz, cliente.id);
+            pressioneENTER();
 
             break;
         case '4':
+            limparTela();
             while (1) {
                     printf("Informe o nome do jogo: ");
                     scanf(" %[^\n]", jogos.nome);
-                    if (jogoExiste(tabela, jogos.nome)) {
-                        printf("Erro: Jogo com o nome '%s' ja existe. Tente novamente.\n", jogos.nome);
-                        continue;
+
+                    verificacao = VerificaNome(jogos.nome);
+            
+                    if(verificacao == 1){
+                        printf("Nome invalido, redirecionando para o menu\n");
+                        pressioneENTER();
+                        break;
                     }
+
+                    if (jogoExiste(tabela, jogos.nome)) {
+                        printf("Erro: Jogo com o nome '%s' ja existe. redirecionando para o menu.\n", jogos.nome);
+                        pressioneENTER();
+                        break;
+                    }
+
                     printf("Informe o preco do jogo: ");
                     scanf("%f", &jogos.preco);
-                    
-                    verificacao = VerificanumInt(&cliente.id);
-                        if(verificacao == 0){
-                        printf("ID invalido, tente novamente\n");
-                        break;
-                        }
 
                     printf("Informe a quantidade do jogo: ");
                     scanf("%d", &jogos.quantidade);
                     
-                    verificacao = VerificanumInt(&cliente.id);
-                        if(verificacao == 0){
-                        printf("ID invalido, tente novamente\n");
+                    verificacao = VerificanumInt(&jogos.quantidade);
+                    if(verificacao == 1){
+                        printf("Quantidade inválida, redirecionando para o menu\n");
+                        pressioneENTER();
                         break;
-                        }
+                    }
 
                     jogos.id = gerarIdUnico();
 
@@ -154,125 +154,108 @@ int main() {
                     inserirNoHeap(&heap, criarJogo(jogos.id, jogos.nome, jogos.preco, jogos.quantidade));
 
                     printf("Jogo cadastrado com sucesso!\n");
+                    pressioneENTER();
                     
                     break;
                 }
                 
                 break;
         case '5':
+                limparTela();
                 imprimirTabela(tabela);
                 printf("Informe o nome do jogo a ser removido: ");
                 scanf(" %[^\n]", jogos.nome);
                 
                 verificacao = VerificaNome(jogos.nome);
                 if(verificacao == 1){
-                    while(VerificaNome(jogos.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do jogos: ");
-                    scanf(" %[^\n]", jogos.nome);
-                    }
+                    printf("Nome invalido, redirecionando para o menu\n");
+                    pressioneENTER();
+                    break;
                 }
 
                 excluirJogo(tabela, jogos.nome);
                 removerDoHeapPorNome(&heap, jogos.nome);
                 printf("Jogo removido com sucesso!\n");
+                pressioneENTER();
                 
                 break;
         case '6':
+            limparTela();
             printf("Estoque\n");
             imprimirTabela(tabela);
+            pressioneENTER();
             
             break;
         case '7':
+            limparTela();
             printf("Informe o nome do jogo a ser buscado: ");
             scanf(" %[^\n]", jogos.nome);
             
             verificacao = VerificaNome(jogos.nome);
-                if(verificacao == 1){
-                    while(VerificaNome(jogos.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do jogos: ");
-                    scanf(" %[^\n]", jogos.nome);
-                    }
-                }
+            if(verificacao == 1){
+                printf("Nome invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
 
             buscarNaTabela(tabela, jogos.nome);
+            pressioneENTER();
             
             break;
         case '8':
+            limparTela();
             printf("Informe o nome do jogo a ser vendido: ");
             scanf(" %[^\n]", jogos.nome);
             
             verificacao = VerificaNome(jogos.nome);
-                if(verificacao == 1){
-                    while(VerificaNome(jogos.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do jogos: ");
-                    scanf(" %[^\n]", jogos.nome);
-                    }
-                }
+            if(verificacao == 1){
+                printf("Nome invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
 
             printf("Informe a quantidade do jogo a ser vendida: ");
             scanf("%d", &jogos.quantidade);
 
-            verificacao = VerificanumInt(&cliente.id);
-                if(verificacao == 0){
-                printf("ID invalido, tente novamente\n");
+            verificacao = VerificanumInt(&jogos.quantidade);
+            if(verificacao == 1){
+                printf("Quantidade inválida, redirecionando para o menu\n");
+                pressioneENTER();
                 break;
-                }
+            }
 
             realizarVenda(tabela, &heap, jogos.nome, jogos.quantidade);
+            pressioneENTER();
+
             break;
 
         case '9':
+            limparTela();
             printf("Reabastecer Estoque\n");
             imprimirHeap(&heap);
             printf("Informe o nome do jogo a ser reabastecido: ");
             scanf(" %[^\n]", jogos.nome);
             
             verificacao = VerificaNome(jogos.nome);
-                if(verificacao == 1){
-                    while(VerificaNome(jogos.nome) == 1){
-                    printf("Nome invalido, tente novamente\n");
-                    printf("Deseja tentar novamente? (s/n)\n");
-                    char tentar;
-                    scanf(" %c", &tentar);
-                    if(tentar == 'n'){
-                        break;
-                    }
-                    printf("Digite o nome do jogos: ");
-                    scanf(" %[^\n]", jogos.nome);
-                    }
-                }
+            if(verificacao == 1){
+                printf("Nome invalido, redirecionando para o menu\n");
+                pressioneENTER();
+                break;
+            }
 
             printf("Informe a quantidade do jogo a ser reabastecida: ");
             scanf("%d", &jogos.quantidade);
 
-            verificacao = VerificanumInt(&cliente.id);
-                if(verificacao == 0){
-                printf("ID invalido, tente novamente\n");
+            verificacao = VerificanumInt(&jogos.quantidade);
+            if(verificacao == 1){
+                printf("Quantidade inválida, redirecionando para o menu\n");
+                pressioneENTER();
                 break;
-                }
+            }
 
             reabastecerEstoque(tabela, &heap, jogos.nome, jogos.quantidade);
+            pressioneENTER();
+
             break;
 
         default:
